@@ -19,4 +19,6 @@ We want to create different methods to obtain or save data of heros. With Spring
 
 Using different types of hero commands For example, add new hero or get all heros from the list. Implement ICommand by types of request and response objects we can access to the command easily. But the problem with these implementation is create one dependency for each command in the controller.
 
+![Screenshot](CommandDesign.png)
+
 ![Screenshot](command1.png)
