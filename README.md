@@ -17,7 +17,9 @@ We want to create different methods to obtain or save data of heros. With Spring
 
 ### Command pattern
 
-Out first command is to get all the heros on the list on HeroList.
+![Screenshot](CommandDesign.png)
+
+Our first command is to get all the heros on the list on HeroList.
 ```
 public class HeroList {
 
@@ -64,8 +66,31 @@ JSON response is:
 ```
 ¡That's good!
 
+Now, the next implementation of ICommand using generic types to refer a specify command.
 
-![Screenshot](CommandDesign.png)
+```
+public interface ICommand<T, S> {
+			
+	public S execute(T request);	
+}
+```
+
+When we have 3 hero operation the controller look like:
+```
+public class Controller {
+	
+	@Autowired
+	private ICommand<Response<HeroNames>, Request<?>> command1;
+	
+	@Autowired
+	private ICommand<Response<AllHeros>, Request<?>> command2;
+	
+	@Autowired
+	private ICommand<Response<?>, Request<Hero>> command3;
+}
+```
+
+To improve the implementation of the interface *ICommand* we'll use another pattern in the proyect.
 
 
 Using different types of hero commands For example, add new hero or get all heros from the list. Implement ICommand by types of request and response objects we can access to the command easily. But the problem with these implementation is create one dependency for each command in the controller.
