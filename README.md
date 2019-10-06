@@ -59,6 +59,7 @@ command.execute();
 
 JSON response is:
 ```
+GET: localhost:8084/hero/all
 {
     "body": {
         "heros": [
@@ -82,6 +83,8 @@ That's good!
 
 When we have 3 hero operation the controller look like:
 ```
+@RestController
+@RequestMapping("/hero")
 public class Controller {
 	
 	@Autowired
