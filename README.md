@@ -64,7 +64,7 @@ JSON response is:
     "status": null
 }
 ```
-¡That's good!
+That's good!
 
 Now, the next implementation of ICommand using generic types to refer a specify command.
 
