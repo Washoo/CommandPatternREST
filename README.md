@@ -42,6 +42,11 @@ public class HeroList {
 }
 ```
 
+Only with:
+```
+command.execute();
+```
+
 JSON response is:
 ```
 {
