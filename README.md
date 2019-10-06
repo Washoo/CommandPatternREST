@@ -19,6 +19,16 @@ We want to create different methods to obtain or save data of heros. With Spring
 
 ![Screenshot](CommandDesign.png)
 
+
+Now, the next implementation of ICommand using generic types to refer a specify command.
+
+```
+public interface ICommand<T, S> {
+			
+	public S execute(T request);	
+}
+```
+
 Our first command is to get all the heros on the list on HeroList.
 ```
 public class HeroList {
@@ -69,15 +79,6 @@ JSON response is:
 }
 ```
 That's good!
-
-Now, the next implementation of ICommand using generic types to refer a specify command.
-
-```
-public interface ICommand<T, S> {
-			
-	public S execute(T request);	
-}
-```
 
 When we have 3 hero operation the controller look like:
 ```
