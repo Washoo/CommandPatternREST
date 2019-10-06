@@ -65,8 +65,7 @@ JSON response is:
                 "alias": "Batman"
             }
         ]
-    },
-    "status": null
+    }
 }
 ```
 That's good!
