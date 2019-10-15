@@ -16,7 +16,7 @@ import com.jramos.pattern.command.dto.AllHeros;
 import com.jramos.pattern.command.dto.HeroNames;
 import com.jramos.pattern.decorator.LoggerDecorator;
 import com.jramos.pattern.decorator.LoggerDecoratorTrace;
-import com.jramos.pattern.entity.Hero;
+import com.jramos.pattern.model.Hero;
 import com.jramos.pattern.utils.Request;
 import com.jramos.pattern.utils.Response;
 
@@ -47,7 +47,7 @@ public class Controller {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping(path = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Response<AllHeros>> getHeros() {
+	public ResponseEntity<Response<AllHeros>> getAllHero() {
 		
 		LoggerDecorator<Request<?>, Response<AllHeros>> decorator = new LoggerDecoratorTrace<>(registry.getCommand(CommandEnum.ALL_HEROS));
 		

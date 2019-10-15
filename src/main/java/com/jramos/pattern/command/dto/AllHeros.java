@@ -2,7 +2,7 @@ package com.jramos.pattern.command.dto;
 
 import java.util.List;
 
-import com.jramos.pattern.entity.Hero;
+import com.jramos.pattern.model.Hero;
 
 public class AllHeros {
 

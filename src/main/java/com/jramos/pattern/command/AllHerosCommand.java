@@ -4,7 +4,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import com.jramos.pattern.command.dto.AllHeros;
-import com.jramos.pattern.dao.HeroList;
+import com.jramos.pattern.dto.HeroList;
 import com.jramos.pattern.interfaces.ICommand;
 import com.jramos.pattern.utils.Request;
 import com.jramos.pattern.utils.Response;

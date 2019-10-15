@@ -1,10 +1,10 @@
-package com.jramos.pattern.dao;
+package com.jramos.pattern.dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.jramos.pattern.entity.Hero;
+import com.jramos.pattern.model.Hero;
 
 public class HeroList {
 

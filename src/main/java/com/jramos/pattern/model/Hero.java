@@ -1,4 +1,4 @@
-package com.jramos.pattern.entity;
+package com.jramos.pattern.model;
 
 public class Hero extends Person {
 
