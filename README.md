@@ -104,3 +104,129 @@ Using different types of hero commands For example, add new hero or get all hero
 
 To improve the implementation of the interface *ICommand* we'll use another pattern in the proyect.
 
+### Factory command
+I created a enum to save the names of the command.
+```
+public enum CommandEnum {
+
+	ALL_HEROS,
+	ADD_HERO,
+	GET_NAMES
+}
+```
+The class to register the commands and the interfaces on a map.
+```
+@Component("Registry")
+public class Registry {
+
+	private static Map<CommandEnum, ICommand> mapCommand = new EnumMap<>(CommandEnum.class);
+	
+	private static Registry registry;
+	
+	Registry() {
+		setRegistry(this);
+	}
+	
+	public static Registry getRegistry() {
+		return registry;
+	}
+	
+	public static void setRegistry(Registry registry) {
+		Registry.registry = registry;
+	}
+		
+	public void register(ICommand command, CommandEnum cenum) {
+		mapCommand.put(cenum, command);
+	}
+	
+	public ICommand getCommand(CommandEnum cenum) {
+		return mapCommand.get(cenum);
+	}
+}
+```
+
+And register the command with the constructor when the bean initialize.
+```
+public HeroNamesCommand() {
+    Registry.getRegistry().register(this, CommandEnum.GET_NAMES);
+}
+```
+
+Now in the controller we can call the command using the registry to ger the context of the commands.
+```
+command.execute(CommandEnum.ALL_HEROS);
+```
+
+### Decorator command
+
+We can use a decorator to wrap our command and add extra features before and after execute them.
+The decorator must implement the `ICommand` to get the context of the command to execute it.
+```
+public abstract class LoggerDecorator<T, S> implements ICommand<T, S>{
+	
+	protected final ICommand<T, S> command;
+	
+	public LoggerDecorator(ICommand<T, S> command) {
+		this.command = command;
+	}
+	
+	@Override
+	public S execute(T request) {
+		return command.execute(request);
+	}
+}
+```
+The next class extends of LoggerDecorator to add our features before and after the execution of the command.
+```
+public class LoggerDecoratorTrace<T, S> extends LoggerDecorator<T, S> {
+
+	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+	public LoggerDecoratorTrace(ICommand<T, S> command) {
+		super(command);
+	}
+	
+	@Override
+	public S execute(T request) {
+		
+		logger(request, "Request: ");
+		
+		S response = command.execute(request);
+		
+		logger(response, "Response: ");
+		
+		return response;
+	}
+	
+	private <D> void logger(D object, String type) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			this.logger(type + mapper.writeValueAsString(object));
+			
+		} catch (JsonProcessingException e) {
+			LOGGER.error("The object cannot be convert to string value.");
+		}
+	}
+	
+	private void logger(String value) {
+		LOGGER.info(value);
+	}
+}
+```
+
+In this case, I'm going to log the request and response of the commands before and after execute it.
+```
+@SuppressWarnings("unchecked")
+@PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<Response<?>> addHero(
+        @RequestBody Request<Hero> request) {
+    
+    LoggerDecorator<Request<Hero>, Response<?>> decorator = new LoggerDecoratorTrace<>(registry.getCommand(CommandEnum.ADD_HERO));
+    
+    return new ResponseEntity<Response<?>>(decorator.execute(request), HttpStatus.OK);
+}
+```
+
+The LoggerDecoratorTrace wrap the command type, execute the command and log the request before and the response after the command.
