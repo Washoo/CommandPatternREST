@@ -31,7 +31,7 @@ public class HeroNamesCommand implements ICommand<Request<?>, Response<HeroNames
 		return getNames();
 	}
 	
-	public Response<HeroNames> getNames() {
+	private Response<HeroNames> getNames() {
 		
 		List<String> names = new ArrayList<>();
 		
