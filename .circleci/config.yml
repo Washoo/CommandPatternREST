@@ -14,10 +14,10 @@ workflows:
   version: 2
   pattern-design:
     jobs:
-      - test:
-          filters:
-            branched:
-              only: /.*/
-            tags:
-              ignore:
-                - /prod-*/
+      - test
+#          filters:
+#            branched:
+#              only: /.*/
+#            tags:
+#              ignore:
+#                - /prod-*/
