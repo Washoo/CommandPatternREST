@@ -3,21 +3,45 @@ jobs:
   test:
     docker:
       - image: circleci/openjdk:11.0.5-stretch-browsers
+    environment:
+      - APPLICATION_NAME: patterns-desings
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Maven test
-          command: mvn test
+          name: Maven packaging...
+          command: mvn package dependency:resolve-plugins dependency:go-offline -Dsurefire.useSystemClassLoader=false
+      - run:
+          name: Docker build
+          command: docker build --tag ${DOCKER_USER}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM} .
+      - run:
+          name: Docker run
+          command: docker run -d --name TestPattern -p 8082:8082 ${DOCKER_USER}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM}
+      - run: sleep 20
+      - run:
+          name: Execution app
+          command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
+
+  deploy:
+    docker:
+      - image: circleci/openjdk:11.0.5-stretch-browsers
+    environment:
+      - APPLICATION_NAME: patterns-desings
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Maven packaging...
+          command: mvn package dependency:resolve-plugins dependency:go-offline -Dsurefire.useSystemClassLoader=false
 
 workflows:
   version: 2
   pattern-design:
     jobs:
-      - test
-#          filters:
-#            branched:
-#              only: /.*/
-#            tags:
-#              ignore:
-#                - /prod-*/
+      - test:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore:
+                - /deploy-*/
