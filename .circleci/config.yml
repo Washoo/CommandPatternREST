@@ -13,7 +13,7 @@ workflows:
   version: 2
   pattern-design:
     jobs:
-      - test
+      - test:
           filters:
             branched:
               only: /.*/
