@@ -1,0 +1,24 @@
+#!/bin/bash
+
+##########################################################################################
+############################## SETUP GLOBAL VARIABLES ####################################
+##########################################################################################
+
+CONTAINER_PORT=8082
+AWS_REGION=us-east-1
+DESIRE_COUNT=1
+HEALTH_CHECK_URI=/actuator/health
+##########################################################################################
+################################## AWS CONFIGURE #########################################
+##########################################################################################
+setup_git(){
+
+    aws configure set aws_access_key_id "${AWS_ACCESS_KEY}"
+    aws configure set aws_secret_access_key "${AWS_SECRET_KEY}"
+    aws configure set default.region ${AWS_REGION}
+    aws configure set default.output json
+}
+
+CLUSTER=$(aws ecs list-clusters | jq .clusterArns[0])
+VPC=$(aws ec2 describe-vpcs | jq '.Vpcs[0]' | jq .'VpcId')
+Listener=
