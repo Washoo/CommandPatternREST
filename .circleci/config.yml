@@ -30,6 +30,7 @@ jobs:
       - APPLICATION_NAME: patterns-desings
       - PROYECT_NAME: weppa
       - JOB: test
+      - AWS_REGION: us-east-1
     steps:
       - checkout
       - setup_remote_docker
