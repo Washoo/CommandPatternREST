@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #more bash-friendly output for jq
-    
+
 CONTAINER_PORT=8082
 AWS_REGION=us-east-1
 DESIRE_COUNT=1
@@ -28,9 +28,9 @@ save_ecr_image() {
 
 deployment() {
 
-  CLUSTER=$(aws ecs list-clusters | jq .clusterArns[0])
-  VPC=$(aws ec2 describe-vpcs | jq '.Vpcs[0]' | jq .'VpcId')
-  SERVICE_LISTENER=$(aws elbv2 describe-load-balancers | jq '.LoadBalancers[]' | jq '.LoadBalancerArn')
+  CLUSTER=$(aws ecs list-clusters | jq -r .clusterArns[0])
+  VPC=$(aws ec2 describe-vpcs | jq '.Vpcs[0]' | jq -r .'VpcId')
+  SERVICE_LISTENER=$(aws elbv2 describe-load-balancers | jq '.LoadBalancers[]' | jq -r '.LoadBalancerArn')
 
   PARAMETERS_DEFINITION="ParameterKey=Listener,ParameterValue=\"${SERVICE_LISTENER}\" \
                          ParameterKey=Cluster,ParameterValue=\"${CLUSTER}\" \
