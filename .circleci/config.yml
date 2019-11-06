@@ -47,10 +47,10 @@ jobs:
       - run:
           name: Execution app
           command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
+      - run: chmod +x ./scripts/development.sh
       - run:
           name: Ejecutando deployment
-          command: chmod +x ./scripts/development.sh |
-                   ./scripts/development.sh
+          command: ./scripts/development.sh
 
 workflows:
   version: 2
