@@ -42,7 +42,6 @@ deployment() {
                          ParameterKey=TaskRoleName,ParameterValue=\"${TASK_NAME_ROLE}\" \
                          ParameterKey=TargetGroupName,ParameterValue=\"${TARGET_GROUP}\" \
                          ParameterKey=TaskDefinitionFamily,ParameterValue=\"${TASK_DEFINITION}\" \
-                         ParameterKey=ApplicationName,ParameterValue=\"${APPLICATION_NAME}\" \
                          ParameterKey=DesiredCount,ParameterValue=\"${DESIRE_COUNT}\" \
                          ParameterKey=ContainerImage,ParameterValue=\"${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROYECT_NAME}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM}\" \
                         "
