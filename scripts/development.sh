@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #more bash-friendly output for jq
-
+ 
 CONTAINER_PORT=8082
 AWS_REGION=us-east-1
 DESIRE_COUNT=1
