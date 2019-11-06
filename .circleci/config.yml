@@ -55,7 +55,7 @@ jobs:
           command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
       - run:
           name: Install nvm
-          command: curl -o-https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh 4 | bash
+          command: curl -o-https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
       - run: chmod +x ./scripts/development.sh
       - run: which bash
       - run:
