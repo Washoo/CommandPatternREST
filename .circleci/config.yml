@@ -55,16 +55,16 @@ workflows:
   version: 2
   pattern-design:
     jobs:
-      - test:
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              ignore:
-                - /deploy-*/
+#      - test:
+#          filters:
+#            branches:
+#              only: /.*/
+#            tags:
+#              ignore:
+#                - /deploy-*/
       - deploy:
           filters:
-            tags:
-              only: /deploy-.*/
+#            tags:
+#              only: /deploy-.*/
             branches:
-              ignore: /.*/
+              only: master
