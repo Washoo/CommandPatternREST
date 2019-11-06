@@ -25,7 +25,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/openjdk:11.0.5-stretch-browsers
+      - image: circleci/openjdk:11.0.2-stretch-node
     environment:
       - APPLICATION_NAME: patterns-desings
       - PROYECT_NAME: weppa
@@ -34,6 +34,12 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run:
+          name: Fixing packages lists for Openjdk DEBIAN STRETCH IMAGES -- JRAMOS
+          command: |
+                sudo rm -r /var/lib/apt/lists/*
+                sudo apt-get update
+          no_output_timeout: 20m
       - run:
           name: Maven packaging...
           command: mvn package dependency:resolve-plugins dependency:go-offline -Dsurefire.useSystemClassLoader=false
