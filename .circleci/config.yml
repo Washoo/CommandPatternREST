@@ -41,6 +41,15 @@ jobs:
                 sudo apt-get update
           no_output_timeout: 20m
       - run:
+          name: Instalando dependencias
+          command: |
+                sudo apt-get install python3
+                sudo apt-get install python-pip --fix-missing
+                sudo apt-get update
+      - run:
+          name: Instalando awscli
+          command: sudo pip install awscli --upgrade
+      - run:
           name: Maven packaging...
           command: mvn package dependency:resolve-plugins dependency:go-offline -Dsurefire.useSystemClassLoader=false
       - run:
@@ -53,9 +62,6 @@ jobs:
       - run:
           name: Execution app
           command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
-      - run:
-          name: Install nvm
-          command: curl -o-https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
       - run: chmod +x ./scripts/development.sh
       - run: which bash
       - run:
