@@ -185,7 +185,7 @@ Resources:
               "Sid": "",
               "Effect": "Allow",
               "Principal": {
-                "Service": "ecs-tasks.amazonaws.com"
+                "AWS": "arn:aws:iam::573584040050:user/Washo"
               },
               "Action": "sts:AssumeRole"
             }
