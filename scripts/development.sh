@@ -35,10 +35,11 @@ deployment() {
 
   CLUSTER=$(aws ecs list-clusters | jq .clusterArns[0])
   VPC=$(aws ec2 describe-vpcs | jq '.Vpcs[0]' | jq .'VpcId')
+  SERVICE_LISTENER=$(aws elbv2 describe-load-balancers | jq '.LoadBalancers[]' | jq '.LoadBalancerArn')
 
   PARAMETERS_DEFINITION="ParameterKey=Listener,ParameterValue=\"${SERVICE_LISTENER}\" \
                          ParameterKey=Cluster,ParameterValue=\"${CLUSTER}\" \
-                         ParameterKey=VPC,ParameterValue=\"${SERVICE_VPC}\" \
+                         ParameterKey=VPC,ParameterValue=\"${VPC}\" \
                          ParameterKey=ServiceRole,ParameterValue=\"${SERVICE_ROLE}\" \
                          ParameterKey=ContainerTaskName,ParameterValue=\"${CONTAINER_TASK}\" \
                          ParameterKey=ContainerPort,ParameterValue=\"${CONTAINER_PORT}\" \
@@ -58,3 +59,9 @@ deployment() {
     aws cloudformation update-stack --stack-name ${STACK_NAME} --template-body file://deploy.yml --capabilities CAPABILITY_NAMED_IAM --parameters ${PARAMETERS_DEFINITION}
   fi
 }
+
+setup_git
+
+save_ecr_image
+
+deployment
