@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 #more bash-friendly output for jq
 
-CONTAINER_PORT=8082
+CONTAINER_PORT=8083
 AWS_REGION=us-east-1
 DESIRE_COUNT=1
-HEALTH_CHECK_URI=/actuator/health
+HEALTH_CHECK_URI=/patterns-designs/hero/get-names
 STACK_NAME=${PROYECT_NAME}-${JOB}-${APPLICATION_NAME}
 TARGET_GROUP=${PROYECT_NAME}-patterns-tg
 TASK_NAME_ROLE=${PROYECT_NAME}-task-role
 CONTAINER_TASK=${STACK_NAME}-container
 TASK_DEFINITION=${CONTAINER_TASK}-family
-CPU_AMOUNT=250
+CPU_AMOUNT=350
 
 setup_git() {
 

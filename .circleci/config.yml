@@ -21,7 +21,7 @@ jobs:
       - run: sleep 20
       - run:
           name: Execution app
-          command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
+          command: docker exec TestPattern echo `curl -sx "" "localhost:8083/patterns-designs/actuator/health"`
 
   deploy:
     docker:
@@ -57,11 +57,11 @@ jobs:
           command: docker build --tag ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROYECT_NAME}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM} .
       - run:
           name: Docker run
-          command: docker run -d --name TestPattern -p 8082:8082 ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROYECT_NAME}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM}
+          command: docker run -d --name TestPattern -p 8083:8083 ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROYECT_NAME}/${APPLICATION_NAME}:${CIRCLE_BUILD_NUM}
       - run: sleep 20
       - run:
           name: Execution app
-          command: docker exec TestPattern echo `curl -sx "" "localhost:8082/patterns-designs/actuator/health"`
+          command: docker exec TestPattern echo `curl -sx "" "localhost:8083/patterns-designs/actuator/health"`
       - run:
           name: Ejecutando deployment
           command: |
