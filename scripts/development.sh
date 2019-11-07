@@ -30,7 +30,8 @@ deployment() {
 
   CLUSTER=$(aws ecs list-clusters | jq -r .clusterArns[0])
   VPC=$(aws ec2 describe-vpcs | jq '.Vpcs[0]' | jq -r .'VpcId')
-  SERVICE_LISTENER=$(aws elbv2 describe-load-balancers | jq '.LoadBalancers[]' | jq -r '.LoadBalancerArn')
+  ALB_SERVICE=$(aws elbv2 describe-load-balancers | jq '.LoadBalancers[]' | jq -r '.LoadBalancerArn')
+  SERVICE_LISTENER=$(aws elbv2 describe-listeners --load-balancer-arn ${ALB_SERVICE} | jq -r '.Listeners[]' | jq -r '.ListenerArn')
 
   PARAMETERS_DEFINITION="ParameterKey=Listener,ParameterValue=\"${SERVICE_LISTENER}\" \
                          ParameterKey=Cluster,ParameterValue=\"${CLUSTER}\" \
